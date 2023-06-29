@@ -1,6 +1,5 @@
 use std::fs;
 use std::path::Path;
-use std::io::prelude::*;
 use std::io::Error;
 
 fn main() {
@@ -8,8 +7,6 @@ fn main() {
 }
 
 fn read_file(f_path: &Path) -> Result<Vec<u8>, Error> {
-  // let f = fs::File::open(f_path).unwrap();
-  // let f_buf = String::new();
   let f_buf = fs::read(f_path);
   f_buf
 }
@@ -19,6 +16,7 @@ mod tests {
   use super::*;
   use std::fs::File;
   use std::fs::remove_file;
+  use std::io::prelude::*;
 
   #[test]
   fn read_file_simple() {
@@ -42,7 +40,7 @@ mod tests {
   fn read_file_empty() {
     // Creating a simple file
     let f_path = Path::new("./foo2.txt");
-    let f = File::create(f_path).unwrap();
+    let _f = File::create(f_path).unwrap();
 
     // Reading from file
     let f_buf = read_file(f_path);
@@ -60,7 +58,5 @@ mod tests {
     // Reading from file
     let f_buf = read_file(f_path);
     assert!(f_buf.is_err());
-
-    //assert_eq!(f_buf, String::new());
   }
 }

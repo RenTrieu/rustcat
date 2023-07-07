@@ -1,7 +1,6 @@
 use std::fs;
 use std::path::Path;
 use std::io::{self, Error, Write};
-use std::env;
 use clap::Parser;
 
 #[allow(unused)]
@@ -15,8 +14,8 @@ struct Args {
 fn main() {
   let args = Args::parse();
 
-  let f_path = args.path;
-  let f_buf = read_file(Path::new(f_path.as_os_str())).unwrap();
+  let f_path = args.path.as_path();
+  let f_buf = read_file(f_path).unwrap();
   let num_bytes = write_stdout(f_buf).unwrap();
   println!("num_bytes: {}", num_bytes);
   println!("Rust Cat Run!");

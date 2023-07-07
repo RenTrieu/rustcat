@@ -15,8 +15,8 @@ fn main() {
   let args = Args::parse();
 
   let f_path = args.path.as_path();
-  let f_buf = read_file(f_path).unwrap();
-  let num_bytes = write_stdout(f_buf).unwrap();
+  let f_buf = read_file(f_path).expect("Could not read file.");
+  let num_bytes = write_stdout(f_buf).expected("Error writing to file.";
   println!("num_bytes: {}", num_bytes);
   println!("Rust Cat Run!");
 }

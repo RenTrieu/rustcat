@@ -2,27 +2,21 @@ use std::fs;
 use std::path::Path;
 use std::io::{self, Error, Write};
 use std::env;
+use clap::Parser;
+
+#[allow(unused)]
+
+#[derive(Parser)]
+struct Args {
+  /// Path to file to read
+  path: std::path::PathBuf,
+}
 
 fn main() {
-  let args: Vec<String> = env::args().collect();
-  let program = args[0].clone();
+  let args = Args::parse();
 
-  if args.len() <= 1 {
-    std::process::exit(exitcode::USAGE);
-  }
-
-  // let mut opts = Options::new();
-  // let matches = match opts.parse(&args[1..]) {
-  //     Ok(m) => { m }
-  //     Err(f) => { panic!("{}", f.to_string()) }
-  // };
-
-  // TODO: Remove the following debug loop
-  for (i, arg) in args.iter().enumerate() {
-    println!("i: {}, arg: {}", i, arg);
-  }
-  let f_path = args[1].clone();
-  let f_buf = read_file(Path::new(f_path.as_str())).unwrap();
+  let f_path = args.path;
+  let f_buf = read_file(Path::new(f_path.as_os_str())).unwrap();
   let num_bytes = write_stdout(f_buf).unwrap();
   println!("num_bytes: {}", num_bytes);
   println!("Rust Cat Run!");

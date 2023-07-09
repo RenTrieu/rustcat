@@ -91,4 +91,23 @@ mod tests {
     let num_bytes = write_stdout(buf);
     assert_eq!(num_bytes.unwrap(), 13);
   }
+
+  #[test]
+  fn read_file_with_newline() {
+    // Creating a simple file
+    let f_path = Path::new("./foo4.txt");
+    let mut f = File::create(f_path).unwrap();
+
+    // Writing to file
+    let test_str = String::from("Hello, world!\nHow are things going?");
+    f.write_all(test_str.as_bytes()).unwrap();
+
+    // Reading from file
+    let f_buf = read_file(f_path);
+
+    // Removing file
+    remove_file(f_path).unwrap();
+    let expected_vec = test_str.into_bytes();
+    assert_eq!(f_buf.unwrap(), expected_vec);
+  }
 }
